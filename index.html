@@ -19,6 +19,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
+            animation: bgShift 15s infinite ease-in-out;
         }
 
         #canvas {
@@ -29,13 +30,14 @@
             height: 100%;
             z-index: -1;
             opacity: 0.6;
+            filter: blur(0.5px);
         }
 
         .cursor-glow {
             position: fixed;
             width: 400px;
             height: 400px;
-            background: radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(0, 139, 0, 0.2) 0%, transparent 70%);
             border-radius: 50%;
             pointer-events: none;
             transform: translate(-50%, -50%);
@@ -52,27 +54,45 @@
             border-radius: 15px;
             box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
             backdrop-filter: blur(5px);
+            perspective: 1000px;
         }
 
         .rotating-logo {
-            animation: rotate 10s linear infinite;
+            animation: rotate3D 8s linear infinite;
             display: block;
             margin: 0 auto 20px;
             width: 200px;
+            height: 200px;
             mix-blend-mode: screen;
             cursor: pointer;
             transition: transform 0.3s, filter 0.3s;
+            transform-style: preserve-3d;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.5), inset 0 0 20px rgba(0, 255, 0, 0.2), inset 0 0 40px rgba(0, 0, 0, 0.8);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 70%);
+            object-fit: cover;
         }
 
         .rotating-logo:hover {
-            animation: rotate 2s linear infinite;
-            filter: drop-shadow(0 0 25px #ff0000) brightness(1.2);
+            animation: rotate3D 2s linear infinite;
+            filter: drop-shadow(0 0 25px #00ff00) brightness(1.2);
             transform: scale(1.1);
         }
 
         @keyframes rotate {
             from { transform: rotateY(0deg); }
             to { transform: rotateY(360deg); }
+        }
+
+        @keyframes rotate3D {
+            from { transform: rotateY(0deg) rotateX(10deg); }
+            to { transform: rotateY(360deg) rotateX(10deg); }
+        }
+
+        @keyframes bgShift {
+            0% { background-color: black; }
+            50% { background-color: #002200; }
+            100% { background-color: black; }
         }
 
         .glitch {
@@ -82,7 +102,10 @@
             position: relative;
             text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
                         -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
-                        0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+                        0.025em 0.05em 0 rgba(0, 0, 255, 0.75),
+                        0 0 10px rgba(0, 255, 0, 0.5),
+                        0 0 20px rgba(0, 255, 0, 0.3),
+                        0 0 30px rgba(0, 255, 0, 0.2);
             animation: glitch 500ms infinite;
             margin: 10px 0;
         }
@@ -103,6 +126,20 @@
             font-style: italic;
             margin-bottom: 20px;
             min-height: 1.5em;
+        }
+
+        .matrix-typing {
+            color: #00ff00;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1rem;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px;
+            border: 1px solid #00ff00;
+            border-radius: 5px;
         }
 
         .marquee-container {
@@ -143,6 +180,58 @@
             50% { opacity: 1; }
             100% { opacity: 0.5; }
         }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .glitch {
+                font-size: 2rem;
+            }
+            .rotating-logo {
+                width: 150px;
+            }
+            .quote {
+                font-size: 1rem;
+            }
+            .matrix-typing {
+                font-size: 0.8rem;
+                max-height: 150px;
+                padding: 5px;
+            }
+            .greetings {
+                font-size: 0.8rem;
+            }
+            .footer {
+                font-size: 0.7rem;
+            }
+            .container {
+                padding: 10px;
+            }
+            .marquee-container {
+                width: 90%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .glitch {
+                font-size: 1.5rem;
+            }
+            .rotating-logo {
+                width: 120px;
+            }
+            .quote {
+                font-size: 0.9rem;
+            }
+            .matrix-typing {
+                font-size: 0.7rem;
+                max-height: 120px;
+            }
+            .greetings {
+                font-size: 0.7rem;
+            }
+            .footer {
+                font-size: 0.6rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -153,6 +242,7 @@
         <img src="https://i.ibb.co/DHwDcL8T/bog.jpg" alt="Logo" class="rotating-logo">
         <h1 class="glitch" data-text="P4wned By [ z14Yπ|× ]">P4wned By [ z14Yπ|× ]</h1>
         <p class="quote" id="typewriter"></p>
+        <p class="matrix-typing" id="matrix-typing"></p>
 
         <div class="marquee-container">
             <marquee behavior="scroll" direction="left" scrollamount="5">
@@ -194,7 +284,7 @@
             ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-            ctx.fillStyle = '#440000'; // Dark red for that crimson look
+            ctx.fillStyle = '#004400'; // Dark green for matrix look
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {
@@ -208,7 +298,7 @@
             }
         }
 
-        setInterval(drawMatrix, 33);
+        let matrixInterval = setInterval(drawMatrix, 33);
 
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
@@ -237,18 +327,69 @@
         
         setTimeout(type, 1000);
 
+        // Matrix Typing Effect
+        const matrixElement = document.getElementById('matrix-typing');
+        const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+
+        function typeMatrix() {
+            const char = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+            matrixElement.innerHTML += char;
+            if (Math.random() < 0.05) {
+                matrixElement.innerHTML += '\n';
+            }
+            // Limit the content to prevent infinite growth
+            if (matrixElement.innerHTML.length > 1000) {
+                matrixElement.innerHTML = matrixElement.innerHTML.slice(-500);
+            }
+        }
+
+        setInterval(typeMatrix, 50);
+
         // Hover Effect Expansion
         document.querySelectorAll('.greetings span').forEach(el => {
             el.addEventListener('mouseover', () => {
                 cursorGlow.style.width = '200px';
                 cursorGlow.style.height = '200px';
-                cursorGlow.style.background = 'radial-gradient(circle, rgba(255, 0, 0, 0.4) 0%, transparent 70%)';
+                cursorGlow.style.background = 'radial-gradient(circle, rgba(0, 255, 0, 0.4) 0%, transparent 70%)';
             });
             el.addEventListener('mouseout', () => {
                 cursorGlow.style.width = '400px';
                 cursorGlow.style.height = '400px';
-                cursorGlow.style.background = 'radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, transparent 70%)';
+                cursorGlow.style.background = 'radial-gradient(circle, rgba(0, 139, 0, 0.2) 0%, transparent 70%)';
             });
+        });
+
+        // Interactive Features
+        // Keyboard: Space to pause/play matrix
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                if (matrixInterval) {
+                    clearInterval(matrixInterval);
+                    matrixInterval = null;
+                    console.log('Matrix paused');
+                } else {
+                    matrixInterval = setInterval(drawMatrix, 33);
+                    console.log('Matrix resumed');
+                }
+            }
+        });
+
+        // Click logo to change matrix color
+        document.querySelector('.rotating-logo').addEventListener('click', () => {
+            const colors = ['#004400', '#440000', '#000044', '#444400', '#004444', '#440044'];
+            ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+            console.log('Matrix color changed');
+        });
+
+        // Click glitch text to toggle blur
+        document.querySelector('.glitch').addEventListener('click', () => {
+            const canvas = document.getElementById('canvas');
+            if (canvas.style.filter === 'blur(0.5px)') {
+                canvas.style.filter = 'blur(0px)';
+            } else {
+                canvas.style.filter = 'blur(0.5px)';
+            }
         });
     </script>
 </body>

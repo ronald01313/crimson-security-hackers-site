@@ -386,15 +386,19 @@
 
         // Matrix Typing Effect
         const matrixElement = document.getElementById('matrix-typing');
-        const matrixChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+        const matrixChars = `"Freedom is not a gift handed down by the powerful—it is a flame carried by the brave. I stand not only for myself, but for every voice silenced, every dream delayed, and every generation that deserves a nation built on dignity, courage, and truth. A true patriot does not bow to fear or injustice; they rise, speak, and fight—because the soul of a nation lives in the courage of its people."`;
 
+        let matrixIndex = 0;
         function typeMatrix() {
-            const char = matrixChars.charAt(Math.floor(Math.random() * matrixChars.length));
+            // sequential typing through the quote
+            const char = matrixChars.charAt(matrixIndex);
             matrixElement.innerHTML += char;
+            matrixIndex = (matrixIndex + 1) % matrixChars.length;
+            // occasional line break for effect
             if (Math.random() < 0.05) {
                 matrixElement.innerHTML += '\n';
             }
-            // Limit the content to prevent infinite growth
+            // limit the content to prevent infinite growth
             if (matrixElement.innerHTML.length > 1000) {
                 matrixElement.innerHTML = matrixElement.innerHTML.slice(-500);
             }

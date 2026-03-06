@@ -20,6 +20,7 @@
             justify-content: center;
             min-height: 100vh;
             animation: bgShift 15s infinite ease-in-out;
+            perspective: 1200px;
         }
 
         #canvas {
@@ -52,13 +53,15 @@
             padding: 20px;
             background: rgba(0, 0, 0, 0.4);
             border-radius: 15px;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1), 0 20px 40px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(5px);
             perspective: 1000px;
+            transform-style: preserve-3d;
+            animation: container3D 6s ease-in-out infinite;
         }
 
         .rotating-logo {
-            animation: rotate3D 8s linear infinite;
+            animation: rotate3D 6s linear infinite;
             display: block;
             margin: 0 auto 20px;
             width: 200px;
@@ -71,6 +74,7 @@
             border-radius: 50%;
             background: radial-gradient(circle, rgba(0, 255, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 70%);
             object-fit: cover;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.4));
         }
 
         .rotating-logo:hover {
@@ -84,9 +88,57 @@
             to { transform: rotateY(360deg); }
         }
 
+        @keyframes float3D {
+            0% { transform: translateY(-5px) rotateX(0deg) rotateZ(0deg); }
+            25% { transform: translateY(-10px) rotateX(5deg) rotateZ(2deg); }
+            50% { transform: translateY(-5px) rotateX(0deg) rotateZ(0deg); }
+            75% { transform: translateY(-10px) rotateX(-5deg) rotateZ(-2deg); }
+            100% { transform: translateY(-5px) rotateX(0deg) rotateZ(0deg); }
+        }
+
+        @keyframes container3D {
+            0% { transform: rotateX(0deg) rotateY(-2deg) translateZ(0px); }
+            50% { transform: rotateX(2deg) rotateY(2deg) translateZ(10px); }
+            100% { transform: rotateX(0deg) rotateY(-2deg) translateZ(0px); }
+        }
+
         @keyframes rotate3D {
-            from { transform: rotateY(0deg) rotateX(10deg); }
-            to { transform: rotateY(360deg) rotateX(10deg); }
+            0% { 
+                transform: rotateY(0deg) rotateX(10deg) rotateZ(0deg) scale(1) translateZ(0px);
+                filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.4));
+            }
+            12.5% { 
+                transform: rotateY(45deg) rotateX(15deg) rotateZ(5deg) scale(0.95) translateZ(10px);
+                filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
+            }
+            25% { 
+                transform: rotateY(90deg) rotateX(20deg) rotateZ(10deg) scale(0.9) translateZ(15px);
+                filter: drop-shadow(0 0 25px rgba(0, 255, 0, 0.7));
+            }
+            37.5% { 
+                transform: rotateY(135deg) rotateX(15deg) rotateZ(5deg) scale(0.95) translateZ(10px);
+                filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
+            }
+            50% { 
+                transform: rotateY(180deg) rotateX(10deg) rotateZ(0deg) scale(1) translateZ(0px);
+                filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.4));
+            }
+            62.5% { 
+                transform: rotateY(225deg) rotateX(5deg) rotateZ(-5deg) scale(0.95) translateZ(10px);
+                filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
+            }
+            75% { 
+                transform: rotateY(270deg) rotateX(0deg) rotateZ(-10deg) scale(0.9) translateZ(15px);
+                filter: drop-shadow(0 0 25px rgba(0, 255, 0, 0.7));
+            }
+            87.5% { 
+                transform: rotateY(315deg) rotateX(5deg) rotateZ(-5deg) scale(0.95) translateZ(10px);
+                filter: drop-shadow(0 0 20px rgba(0, 255, 0, 0.6));
+            }
+            100% { 
+                transform: rotateY(360deg) rotateX(10deg) rotateZ(0deg) scale(1) translateZ(0px);
+                filter: drop-shadow(0 0 15px rgba(0, 255, 0, 0.4));
+            }
         }
 
         @keyframes bgShift {
@@ -106,18 +158,20 @@
                         0 0 10px rgba(0, 255, 0, 0.5),
                         0 0 20px rgba(0, 255, 0, 0.3),
                         0 0 30px rgba(0, 255, 0, 0.2);
-            animation: glitch 500ms infinite;
+            animation: glitch 500ms infinite, float3D 4s ease-in-out infinite;
             margin: 10px 0;
+            transform-style: preserve-3d;
+            transform: perspective(1000px);
         }
 
         @keyframes glitch {
-            0% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75); }
-            14% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75); }
-            15% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75); }
-            49% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75); }
-            50% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75); }
-            99% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75); }
-            100% { text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em -0.05em 0 rgba(0, 0, 255, 0.75); }
+            0% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75), 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3), 0 0 30px rgba(0, 255, 0, 0.2); }
+            14% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75), 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3), 0 0 30px rgba(0, 255, 0, 0.2); }
+            15% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75), 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3), 0 0 30px rgba(0, 255, 0, 0.2); }
+            49% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75), 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3), 0 0 30px rgba(0, 255, 0, 0.2); }
+            50% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75), 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3), 0 0 30px rgba(0, 255, 0, 0.2); }
+            99% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75), 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3), 0 0 30px rgba(0, 255, 0, 0.2); }
+            100% { text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em -0.05em 0 rgba(0, 0, 255, 0.75), 0 0 10px rgba(0, 255, 0, 0.5), 0 0 20px rgba(0, 255, 0, 0.3), 0 0 30px rgba(0, 255, 0, 0.2); }
         }
 
         .quote {
@@ -126,6 +180,7 @@
             font-style: italic;
             margin-bottom: 20px;
             min-height: 1.5em;
+            transform: perspective(1000px) rotateX(5deg);
         }
 
         .matrix-typing {
@@ -188,6 +243,7 @@
             }
             .rotating-logo {
                 width: 150px;
+                height: 150px;
             }
             .quote {
                 font-size: 1rem;
@@ -217,6 +273,7 @@
             }
             .rotating-logo {
                 width: 120px;
+                height: 120px;
             }
             .quote {
                 font-size: 0.9rem;

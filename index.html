@@ -1,70 +1,255 @@
-<html><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrimsonSecurityHackers</title>
+    <link rel="SHORTCUT ICON" href="https://i.ibb.co/zL6ZPph/hey.png" alt="hey" border="0">
+    <script>alert('z14Yπ|× WAS H3π3!!!')</script>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black;
+            color: #ff0000;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
 
-<title>CrimsonSecurityHackers</title>
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.6;
+        }
 
-<link rel="SHORTCUT ICON" href="https://i.ibb.co/zL6ZPph/hey.png" alt="hey" border="0">
-<script>alert('z14Yπ|× WAS H3π3!!!')</script>
-<style>
+        .cursor-glow {
+            position: fixed;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            transition: width 0.3s, height 0.3s;
+        }
 
-body {
-	background-image:url('https://s16.postimg.org/6wq2zqof9/Red_CHS.jpg');
-	background-color: black;
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
-    color: #ff0000;
-    font-family: 'Courier New', Courier, monospace;
-}
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.1);
+            backdrop-filter: blur(5px);
+        }
 
-.rotating-logo {
-    animation: rotate 10s linear infinite;
-    display: block;
-    margin: 20px auto;
-    mix-blend-mode: screen;
-}
+        .rotating-logo {
+            animation: rotate 10s linear infinite;
+            display: block;
+            margin: 0 auto 20px;
+            width: 200px;
+            mix-blend-mode: screen;
+            cursor: pointer;
+            transition: transform 0.3s, filter 0.3s;
+        }
 
-@keyframes rotate {
-    from { transform: rotateY(0deg); }
-    to { transform: rotateY(360deg); }
-}
+        .rotating-logo:hover {
+            animation: rotate 2s linear infinite;
+            filter: drop-shadow(0 0 25px #ff0000) brightness(1.2);
+            transform: scale(1.1);
+        }
 
-.glow {
-    text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
-    animation: flicker 2s infinite alternate;
-}
+        @keyframes rotate {
+            from { transform: rotateY(0deg); }
+            to { transform: rotateY(360deg); }
+        }
 
-@keyframes flicker {
-    from { opacity: 0.7; }
-    to { opacity: 1; text-shadow: 0 0 20px #ff0000, 0 0 30px #8b0000; }
-}
+        .glitch {
+            font-size: 3rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            position: relative;
+            text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75),
+                        -0.025em -0.05em 0 rgba(0, 255, 0, 0.75),
+                        0.025em 0.05em 0 rgba(0, 0, 255, 0.75);
+            animation: glitch 500ms infinite;
+            margin: 10px 0;
+        }
 
-.footer {
-    color: #ff0000;
-    font-size: 10px;
-    margin-top: 50px;
-}
+        @keyframes glitch {
+            0% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75); }
+            14% { text-shadow: 0.05em 0 0 rgba(255, 0, 0, 0.75), -0.05em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em 0.05em 0 rgba(0, 0, 255, 0.75); }
+            15% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75); }
+            49% { text-shadow: -0.05em -0.025em 0 rgba(255, 0, 0, 0.75), 0.025em 0.025em 0 rgba(0, 255, 0, 0.75), -0.05em -0.05em 0 rgba(0, 0, 255, 0.75); }
+            50% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75); }
+            99% { text-shadow: 0.025em 0.05em 0 rgba(255, 0, 0, 0.75), 0.05em 0 0 rgba(0, 255, 0, 0.75), 0 -0.05em 0 rgba(0, 0, 255, 0.75); }
+            100% { text-shadow: -0.025em 0 0 rgba(255, 0, 0, 0.75), -0.025em -0.025em 0 rgba(0, 255, 0, 0.75), -0.025em -0.05em 0 rgba(0, 0, 255, 0.75); }
+        }
 
-</style>
-</head><body>
-<center>
-    <br><br>
-    <img src="https://i.ibb.co/DHwDcL8T/bog.jpg" width="200px" class="rotating-logo">
-    <h1 class="glow">P4wned By [ z14Yπ|× ]</h1>
-    <p><i><font size="3" color="white">"Security is like a Game. Sometimes you lose, sometimes you win."</font></i></p>
-    <br>
-    <marquee behavior="scroll" direction="left" scrollamount="3" width="80%">
-        <font color="red">CrimsonSecurityHackers is watching you...</font>
-    </marquee>
-    <br><br>
-    <font color="grey" size="2">//GREETINGS TO\\</font><br>
-    <font size="3" color="white">
-        Anonymous Philippines <font color="red">|</font> Philippine Cyber Army <font color="red">|</font> Anonywolves PH <font color="red">|</font> AnonGhost <font color="red">|</font> BloodSecurity Hackers <font color="red">|</font> Global Security Hackers<br> 
-        Pure Hackers International <font color="red">|</font> Magdalo Cyber Army <font color="red">|</font> Pinoy Lulzsec <font color="red">|</font> Pinoy Vendetta <font color="red">|</font> ZyberPH <font color="red">|</font> PHU <font color="red">|</font> HopePhilippines <font color="red">|</font> All PH Hackers
-    </font>
-    <div class="footer">© CrimsonSecurityHackers</div>
-    <iframe width="0" height="0" src="http://www.youtube.com/embed/hKRUPYrAQoE?rel=0&amp;autoplay=1&amp;loop=1&amp;playlist=AG__qXMrgQI" frameborder="0" allowfullscreen=""></iframe>
-</center>
-</body></html>
+        .quote {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 20px;
+            min-height: 1.5em;
+        }
 
+        .marquee-container {
+            width: 80%;
+            margin: 20px auto;
+            border-top: 1px solid #ff0000;
+            border-bottom: 1px solid #ff0000;
+            padding: 5px 0;
+        }
 
+        .greetings {
+            color: #888888;
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
 
+        .greetings span {
+            color: #ffffff;
+            transition: color 0.3s;
+        }
+
+        .greetings span:hover {
+            color: #ff0000;
+            text-shadow: 0 0 5px #ff0000;
+            cursor: crosshair;
+        }
+
+        .footer {
+            margin-top: 40px;
+            font-size: 0.8rem;
+            color: #660000;
+            letter-spacing: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="cursor-glow" id="cursor-glow"></div>
+    <canvas id="canvas"></canvas>
+
+    <div class="container">
+        <img src="https://i.ibb.co/DHwDcL8T/bog.jpg" alt="Logo" class="rotating-logo">
+        <h1 class="glitch" data-text="P4wned By [ z14Yπ|× ]">P4wned By [ z14Yπ|× ]</h1>
+        <p class="quote" id="typewriter"></p>
+
+        <div class="marquee-container">
+            <marquee behavior="scroll" direction="left" scrollamount="5">
+                <span style="color: #ff0000; font-weight: bold;">[!] SYSTEM COMPROMISED [!] </span>
+                CrimsonSecurityHackers is watching you... 
+                <span style="color: #ff0000; font-weight: bold;"> [!] ACCESS GRANTED [!] </span>
+            </marquee>
+        </div>
+
+        <div class="greetings">
+            // GREETINGS TO \\<br>
+            <span>Anonymous Philippines</span> | <span>Philippine Cyber Army</span> | <span>Anonywolves PH</span> | <span>AnonGhost</span> | <span>BloodSecurity Hackers</span> | <span>Global Security Hackers</span><br> 
+            <span>Pure Hackers International</span> | <span>Magdalo Cyber Army</span> | <span>Pinoy Lulzsec</span> | <span>Pinoy Vendetta</span> | <span>ZyberPH</span> | <span>PHU</span> | <span>HopePhilippines</span> | <span>All PH Hackers</span>
+        </div>
+
+        <div class="footer">© CrimsonSecurityHackers</div>
+    </div>
+
+    <iframe width="0" height="0" src="https://www.youtube.com/embed/hKRUPYrAQoE?rel=0&autoplay=1&loop=1&playlist=AG__qXMrgQI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+    <script>
+        // Matrix Background
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#440000'; // Dark red for that crimson look
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 33);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Cursor Glow
+        const cursorGlow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            cursorGlow.style.left = e.clientX + 'px';
+            cursorGlow.style.top = e.clientY + 'px';
+        });
+
+        // Typewriter Effect
+        const text = "Security is like a Game. Sometimes you lose, sometimes you win.";
+        const typewriterElement = document.getElementById('typewriter');
+        let index = 0;
+
+        function type() {
+            if (index < text.length) {
+                typewriterElement.innerHTML += text.charAt(index);
+                index++;
+                setTimeout(type, 100);
+            }
+        }
+        
+        setTimeout(type, 1000);
+
+        // Hover Effect Expansion
+        document.querySelectorAll('.greetings span').forEach(el => {
+            el.addEventListener('mouseover', () => {
+                cursorGlow.style.width = '200px';
+                cursorGlow.style.height = '200px';
+                cursorGlow.style.background = 'radial-gradient(circle, rgba(255, 0, 0, 0.4) 0%, transparent 70%)';
+            });
+            el.addEventListener('mouseout', () => {
+                cursorGlow.style.width = '400px';
+                cursorGlow.style.height = '400px';
+                cursorGlow.style.background = 'radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, transparent 70%)';
+            });
+        });
+    </script>
+</body>
+</html>
